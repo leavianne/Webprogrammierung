@@ -1,0 +1,100 @@
+I. Protokollversionen, Protokollverhalten, Adressierung:
+Aufgabe 1:
+
+1. Welche relevanten Informationen können Sie der Request- bzw. Response-
+Nachricht entnehmen (z.B. http-Methode, status code, ggf. upgrade, location
+etc.) und wie würden Sie diese interpretieren?
+
+a) 
+* Host www.httpvshttps.com:80 was resolved.
+* IPv6: 2600:3c00::f03c:91ff:fe28:3acc
+* IPv4: 45.33.7.16
+*   Trying 45.33.7.16:80...
+* Connected to www.httpvshttps.com (45.33.7.16) port 80
+> GET / HTTP/1.1
+> Host: www.httpvshttps.com
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx
+< Date: Thu, 02 Apr 2026 06:59:57 GMT
+< Content-Type: text/html; charset=UTF-8
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< x-instance: rocket-dallas
+< x-powered-by: anthum.com
+
+
+b) 
+* Host www2.htw-dresden.de:80 was resolved.
+* IPv6: (none)
+* IPv4: 141.56.16.35
+*   Trying 141.56.16.35:80...
+* Connected to www2.htw-dresden.de (141.56.16.35) port 80
+> GET /~skuehn/IT1/prakt1_a1.html HTTP/1.1
+> Host: www2.htw-dresden.de
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Server: nginx/1.24.0 (Ubuntu)
+< Date: Thu, 02 Apr 2026 07:00:50 GMT
+< Content-Type: text/html
+< Content-Length: 178
+< Connection: keep-alive
+< Location: https://www2.htw-dresden.de/~skuehn/IT1/prakt1_a1.html
+
+Antwort: 
+- beide laufen über Port 80
+- Kühn: über http 1.1; Server: nginx/1.24.0 (Ubuntu)
+- Unterschiede: Kühn hat kein IPv6, 
+- Unverschlüsselte Standard-HTTP/1.1-Anfragen
+- Webserver antworten entweder direkt oder erzwingen eine Umleitung auf die sichere Variante
+
+2. Testen Sie für beide URLs auch die curl-Schalter -L und -I aus. Erklären Sie die
+Unterschiede bzw. Änderungen in den Ausgaben zu den originalen Abfragen in a.
+und b.!
+
+- Schalter -I (Head-Request):
+	- Sendet Methode HEAD statt GET.
+	- Der Server liefert nur die Header-Informationen (Metadaten), kein Body/HTML-Inhalt wird übertragen. spart Bandbreite.
+- Schalter -L (Location-Follow):
+	- Folgt automatischen Weiterleitungen (Redirects wie Status 301/302).
+	- curl führt bei einer "Location"-Antwort automatisch eine neue Anfrage an die Ziel-URL aus, bis das finale Dokument (z.B. 200 OK) erreicht ist.
+
+3. Testen Sie für beide URLs auch den curl-Schalter --http2 aus. Was bedeutet im
+Response h2c?
+
+- Schalter --http2: Erzwingt den Versuch, HTTP/2 zu nutzen.
+- Bedeutung "h2c": Steht für "HTTP/2 Cleartext".
+- Interpretation: HTTP/2 über eine unverschlüsselte TCP-Verbindung (ohne TLS). Wird von den meisten modernen Browsern aus Sicherheitsgründen nicht unterstützt, curl kann es jedoch via Upgrade-Header anfragen.
+
+Aufgabe 2: 
+1.
+- Beide Server nutzen bzw. wechseln im Verlauf des TLS-Handshakes auf HTTP/2 (oder höher).
+- Die Verbindung läuft verschlüsselt über Port 443 (HTTPS).
+2.
+- Request: "ALPN, offering h2, http/1.1" (curl signalisiert, welche Protokolle es beherrscht).
+- Response: "h2" im Protokoll-Präfix der Statuszeile (z.B. HTTP/2 200) oder via ALPN-Bestätigung im TLS-Handshake ("ALPN, server accepted to use h2").
+
+Datei: prakt1_Teil_II.txt
+
+1. Wie unterscheidet sich die Anzahl der Verbindungen und damit das zeitliche
+Beziehen der Objekte über die Verbindungen z. B. nacheinander/parallel (pro
+Domäne bzw. Zieladresse)?
+
+- HTTP (Tab 1, HTTP/1.1): Viele parallele TCP-Verbindungen (Browser-Limit meist max. 6 pro Domäne). Objekte blockieren sich gegenseitig (Head-of-Line Blocking), Laden erfolgt gestaffelt/nacheinander in "Wellen".
+- HTTPS (Tab 2, HTTP/2): Nur eine einzige TCP-Verbindung (Multiplexing). Alle Objekte werden parallel und gleichzeitig über diesen einen Kanal gestreamt. Deutlich schnellerer Gesamt-Ladevorgang.
+
+2. Berechnen und vergleichen Sie die TFFB3 (Time To First Byte) beider Tabs für das
+Dokument (wechseln der Anzeige von All bzw. Img auf -> Auswahl Doc)!
+
+- HTTP (Tab 1): TTFB ist oft minimal kürzer beim Erstkontakt, da der TLS-Handshake (Verschlüsselung) entfällt.
+- HTTPS (Tab 2): TTFB ist beim allerersten Aufruf etwas höher, da vor dem HTTP-Request erst der TCP- und der TLS-Handshake durchgeführt werden müssen.
+
+3. Begründen Sie die Unterschiede in den Content Download-Zeiten beider Anfragen
+(Auswahl Doc)!
+
+- Bei HTTP/1.1 müssen Ressourcen oft warten, bis eine TCP-Verbindung frei wird (Warteschlange).
+- Bei HTTP/2 entfällt die Wartezeit auf freie Sockets. Obwohl die reine Übertragungszeit der Bytes ähnlich ist, verringert HTTP/2 die Latenz durch das Senden aller Anfragen in einem Rutsch drastisch, was den Content Download effizienter verschachtelt.

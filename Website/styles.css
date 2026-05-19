@@ -1,0 +1,260 @@
+@font-face {
+    font-family: "Montserrat", sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+}
+
+body {
+    font-family: "Source Sans Pro", sans-serif;
+    margin:0;
+    padding: 0;
+    background:#e9ebeb96;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+header, footer {
+    background:#0b1120;
+    color:#fff;
+    padding:32px;
+}
+
+nav a {
+    color:#c97dfc;
+    margin-right:16px;
+    text-decoration:none;
+}
+
+main {
+    max-width:960px;
+    margin:0 auto;
+    padding: 20px;
+}
+
+section {
+    border-radius:8px;
+    margin: 24px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px rgba(110, 110, 110, 0.706);
+}
+
+h2 {
+    font-weight: 700;
+    font-family: "Montserrat";
+}
+
+p {
+    font-family: "Montserrat";
+    font-weight: 400;
+}
+
+video {
+    font-style: italic;
+}
+
+article {
+    border: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 40px;
+    background: #fff;
+}
+
+/* ===== POSITIONIERUNG DER BILDER (AUFGABE 4) ===== */
+
+/* Display: block - Standardfluss vertikal - testen auch ohne (inline) -> horizontal*/
+.bilder img {
+    width: 30%; /* Bilder nehmen ein Drittel der Breite des Containers ein */
+    height: auto;
+    display: block; /* img ist standardmäßig inline Element */
+}
+
+/* normale Position -> Standardfluss */
+.static {
+    position: static; /* Setzt das Element zurück in den normalen Dokumentenfluss */
+}
+
+/* Positioning relative - Verschiebung relativ zur normalen Position */
+.relative {
+    position: relative; /* Verschiebt das Bild relativ zu seiner ursprünglichen Position */
+    top: 50px; /* Verschiebt das Bild nach unten (Relative Verschiebung) */
+    left: 50px; /* Verschiebt das Bild nach rechts */
+}
+
+/* Positioning absolute - Positioniert absolut innerhalb eines Containers */
+.bilder {
+    position: relative; /* Elternelement muss positioniert sein, damit 'absolute' funktioniert */
+}
+
+.absolute {
+    position: absolute;
+    top: 50px; /* Positioniert das Bild 50px von oben */
+    left: 50%; /* Positioniert das Bild 50% von links */
+}
+
+/* Positioning fixed - Bild bleibt beim Scrollen fixiert */
+.fixed {
+    position: fixed;
+    top: 20px; /* Fixiert das Bild 20px vom oberen Rand des Viewports */
+    left: 20px; /* Fixiert das Bild 20px vom linken Rand des Viewports */
+    z-index: 100; /* Stellt sicher, dass das Bild über anderen Elementen bleibt */
+}
+
+nav.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a1a2e;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+nav.menu ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 15px 0;
+    list-style: none;
+    gap: 30px;
+}
+
+nav.menu li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+nav.menu li a:hover {
+    background-color: #e94560;
+    color: white;
+}
+
+/* Fixierte Navigation */
+body {
+    padding-top: 70px;
+}
+
+main {
+    max-width:960px;
+    margin:0 auto;
+    padding: 20px;
+}
+
+section {
+    border-radius:8px;
+    margin: 24px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px rgba(110, 110, 110, 0.706);
+}
+
+h2 {
+    font-weight: 700;
+    font-family: "Montserrat";
+}
+
+p {
+    font-family: "Montserrat";
+    font-weight: 400;
+}
+
+video {
+    font-style: italic;
+}
+
+article {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 40px;
+    background: #fff;
+}
+
+/* Float Anordnung */
+.blog-float {
+    overflow: hidden;
+}
+
+/* Erste Section: volle Breite */
+.blog-float section:first-child {
+    width: 100%;
+}
+
+/* Zweite und dritte Section: nebeneinander mit 2% Abstand */
+.blog-float section:nth-child(2),
+.blog-float section:nth-child(3) {
+    float: left;
+    width: 49%;
+    margin-right: 2%;
+}
+
+.blog-float section:nth-child(3) {
+    margin-right: 0;
+}
+
+/* Float beenden */
+.clear {
+    clear: both;
+}
+
+/* Flex Anordnung */
+.blog-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+
+/* Erste Section: volle Breite */
+.blog-flex section:first-child {
+    flex-basis: 100%;
+}
+
+/* Zweite und dritte Section: nebeneinander */
+.blog-flex section:nth-child(2),
+.blog-flex section:nth-child(3) {
+    flex-basis: calc(50% - 1%);
+}
+
+/* Grid Anordnung */
+.blog-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+    grid-template-areas: 
+        "a a"
+        "c d";
+}
+
+/* h1 Überschrift auf gesamte Breite */
+.blog-grid h4:first-of-type {
+    grid-area: a;
+}
+
+/* Erste Section: volle Breite */
+.blog-grid section:first-child {
+    grid-area: a;
+}
+
+/* Zweite Section: linke Spalte */
+.blog-grid section:nth-child(2) {
+    grid-area: c;
+}
+
+/* Dritte Section: rechte Spalte */
+.blog-grid section:nth-child(3) {
+    grid-area: d;
+}

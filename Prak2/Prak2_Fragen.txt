@@ -1,0 +1,28 @@
+1. Welche Vorteile haben Strukturelemente? 
+- Verbessern die Barrierefreiheit für Screenreader
+- Erhöhen die semantische Lesbarkeit des Codes für Entwickler
+- Optimieren die Suchmaschinenoptimierung (SEO), da Suchmaschinen die Seitenstruktur besser verstehen
+
+2. Welcher Unterschied besteht zwischen <section> und <article>? 
+- <article> steht für einen eigenständigen, in sich geschlossenen Inhalt, der unabhängig verteilt werden könnte (z. B. ein Blogbeitrag)
+- <section> gruppiert thematisch zusammengehörige Inhalte innerhalb eines Dokuments und erfordert meist eine Überschrift
+
+3. Worin bestehen die Unterschiede/ Gemeinsamkeiten zwischen einem allgemeinen Hyperlink und einem Anker? 
+- Gemeinsamkeit: Beide nutzen das <a>-Tag mit dem href-Attribut zur Navigation
+- Unterschied: Ein allgemeiner Hyperlink führt zu einer externen Webseite oder einer anderen Datei, während ein Anker zu einer bestimmten Stelle (ID) innerhalb derselben Seite springt
+
+4. Was ist der Unterschied/Gemeinsamkeit zwischen <span> und <div>? 
+- Gemeinsamkeit: Beide sind neutrale Container-Elemente ohne eigene semantische Bedeutung, die für Styling oder Skripte genutzt werden
+- Unterschied: <div> ist ein Block-Element (erzeugt einen Zeilenumbruch und nutzt die volle Breite), während <span> ein Inline-Element ist (fließt im Text mit und bricht nicht um)
+
+5. Welche Besonderheit weist der <p> -Tag auf hinsichtlich der Darstellung des Textes? 
+- Erzeugt automatisch einen vertikalen Abstand (Margin) vor und nach dem Absatz
+- Ignoriert mehrfache Leerzeichen und Zeilenumbrüche (Whitespaces) im Quelltext und stellt sie als einzelnes Leerzeichen dar
+
+6. Auf Basis welcher Charakteristik werden die Bilder in 3. nach Zuordnung der Breite von 30% automatisch nebeneinander dargestellt? 
+- Das <img>-Tag ist standardmäßig ein Inline-Block-Element (Inline-Element mit Block-Eigenschaften)
+- Dadurch fließen die Bilder wie Text nebeneinander, solange die Gesamtbreite (3 x 30% = 90%) die Breite des Elterncontainers nicht überschreitet
+
+7. Warum kann beim Einbinden externer Ressourcen gegebenenfalls eine Verletzung der Datenschutzgesetzverordnung (DSGVO) auftreten? 
+- Beim Laden externer Inhalte wird automatisch die IP-Adresse des Nutzers an den Drittanbieter-Server übermittelt
+- Dies geschieht oft ohne die vorherige, explizite Einwilligung des Nutzers, was der DSGVO widerspricht
